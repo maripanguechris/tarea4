@@ -45,7 +45,7 @@ pipeline {
            steps{
                figlet 'SonarQube'
                script{
-                   def scannerHome = tool 'sonarqube'
+                   def scannerHome = tool 'SonarQube Scanner'
                    
                    withSonarQubeEnv('sonarqubeserver'){
                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-maven -Dsonar.sources=. -Dsonar.projectBaseDir=${env.WORKSPACE} -Dsonar.java.binaries=target/classes -Dsonar.exclusions='**/*/test/**/*, **/*/acceptance-test/**/*, **/*.html'"
