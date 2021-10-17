@@ -43,8 +43,19 @@ pipeline {
                    withSonarQubeEnv('SonarQube servers'){
                        sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-maven -Dsonar.sources=. -Dsonar.projectBaseDir=${env.WORKSPACE} -Dsonar.java.binaries=target/classes -Dsonar.exclusions='**/*/test/**/*, **/*/acceptance-test/**/*, **/*.html'"
                    }
+            
                }
+               
            }
+        stage('SCA'){
+            steps{
+                figlet 'Dependency-Check'
+                sh 'mvn org.owasp:dependency-check-maven:check'
+                
+                archiveArtifacts artifacts: 'target/dependency-check-report.html', followSymlinks: false
+            }
+        }
+            
           }
           }
           }
