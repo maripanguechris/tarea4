@@ -66,9 +66,9 @@ pipeline {
         		   env.TARGET = 'https://demo.testfire.net/'
         	
         		    sh '${DOCKER_EXEC} rm -f zap2'
-        		    sh  "${DOCKER_EXEC} pull owasp/zap2docker-stable"
-                    sh  '${DOCKER_EXEC} run --add-host="localhost:192.168.1.86" --rm -e LC_ALL=C.UTF-8 -e LANG=C.UTF-8 --name zap2 -u zap -p 8093:8093 -d owasp/zap2docker-stable zap.sh -daemon -port 8093 -host 0.0.0.0 -config api.disablekey=true'
-                    sh  '${DOCKER_EXEC} run --add-host="localhost:192.168.1.86" -v /var/jenkins_home:/zap/wrk/:rw --rm -i owasp/zap2docker-stable zap-baseline.py -t "https://demo.testfire.net/" -I -r zap_baseline_report.html -l PASS'	
+        		    sh '${DOCKER_EXEC} pull owasp/zap2docker-stable'
+                    sh '${DOCKER_EXEC} run --add-host="localhost:192.168.1.86" --rm -e LC_ALL=C.UTF-8 -e LANG=C.UTF-8 --name zap2 -u zap -p 8093:8093 -d owasp/zap2docker-stable zap.sh -daemon -port 8093 -host 0.0.0.0 -config api.disablekey=true'
+                    sh '${DOCKER_EXEC} run --add-host="localhost:192.168.1.86" -v /var/jenkins_home:/zap/wrk/:rw --rm -i owasp/zap2docker-stable zap-baseline.py -t "https://demo.testfire.net/" -I -r zap_baseline_report.html -l PASS'	
         		   
         		   publishHTML([
         				    allowMissing: false,
