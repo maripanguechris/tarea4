@@ -69,7 +69,7 @@ pipeline {
                 '''
 
                 sh '${DOCKER_EXEC} rmi aquasec/trivy'
-                archiveArtifacts artifacts: '/home/scan-docker.html', followSymlinks: false
+                
                     		        }
                     			}
             }
