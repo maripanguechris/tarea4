@@ -54,6 +54,22 @@ pipeline {
                 sh 'mvn org.owasp:dependency-check-maven:check'
                 
                 archiveArtifacts artifacts: 'target/dependency-check-report.html', followSymlinks: false
+                
+        stage('Scan Docker'){
+               steps{
+                 figlet 'Scan Docker'
+               script{
+                  env.DOCKER = tool "Docker"
+        				         env.DOCKER_EXEC = "${DOCKER}/bin/docker"
+
+                sh '''
+                   ${DOCKER_EXEC} run --rm -v $(pwd):/root/.cache/ aquasec/trivy python:3.4-alpine
+                '''
+
+                sh '${DOCKER_EXEC} rmi aquasec/trivy'
+                    		        }
+                    			}
+            }
             }
         }
               stage('DAST'){
