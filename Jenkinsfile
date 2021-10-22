@@ -34,19 +34,7 @@ pipeline {
         
       
         
-        stage('Sonarqube'){
-           steps{
-               figlet 'SonarQube'
-               script{
-                   def scannerHome = tool 'SonarQube Scanner'
-                   
-                   withSonarQubeEnv('SonarQube servers'){
-                       sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ms-maven -Dsonar.sources=. -Dsonar.projectBaseDir=${env.WORKSPACE} -Dsonar.java.binaries=target/classes -Dsonar.exclusions='**/*/test/**/*, **/*/acceptance-test/**/*, **/*.html'"
-                   }
-               }
-        
-           }
-          }
+       
         
         stage('SCA'){
             steps{
@@ -65,7 +53,7 @@ pipeline {
         				         env.DOCKER_EXEC = "${DOCKER}/bin/docker"
 
                 sh '''
-                   ${DOCKER_EXEC} run --rm -v $(pwd):/root/.cache/ aquasec/trivy python:3.4-alpine
+                   ${DOCKER_EXEC} run --rm -v $(pwd):/root/.cache/ aquasec/trivy openjdk:8-jdk-alpine
                 '''
 
                 sh '${DOCKER_EXEC} rmi aquasec/trivy'
