@@ -54,6 +54,8 @@ pipeline {
                 sh 'mvn org.owasp:dependency-check-maven:check'
                 
                 archiveArtifacts artifacts: 'target/dependency-check-report.html', followSymlinks: false
+                     }
+        }
                 
         stage('Scan Docker'){
                steps{
@@ -70,8 +72,7 @@ pipeline {
                     		        }
                     			}
             }
-            }
-        }
+       
               stage('DAST'){
             steps{
                 figlet 'Owasp Zap DAST'
